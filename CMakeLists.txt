@@ -7,9 +7,39 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+
+include_directories(
+  include
+)
+
+# Add walker executable
+
+# add_executable(obstacle_avoider
+#   src/ObstacleAvoider.cpp
+# )
+# ament_target_dependencies(obstacle_avoider
+#   rclcpp
+#   geometry_msgs
+#   sensor_msgs
+# )
+# install(TARGETS
+#   obstacle_avoider
+#   DESTINATION lib/${PROJECT_NAME}
+# )
+# install(
+#   DIRECTORY include/
+#   DESTINATION include
+# )
+
+# Install additional directories.
+install(DIRECTORY
+  launch
+  worlds
+  DESTINATION share/${PROJECT_NAME}/
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
