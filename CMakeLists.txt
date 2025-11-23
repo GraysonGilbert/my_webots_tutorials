@@ -27,46 +27,47 @@ include_directories(
 
 # Add walker executable
 
-# add_executable(obstacle_avoider
-#   src/ObstacleAvoider.cpp
-# )
-# ament_target_dependencies(obstacle_avoider
-#   rclcpp
-#   geometry_msgs
-#   sensor_msgs
-# )
-# install(TARGETS
-#   obstacle_avoider
-#   DESTINATION lib/${PROJECT_NAME}
-# )
-# install(
-#   DIRECTORY include/
-#   DESTINATION include
-# )
+add_executable(webot_walker
+  src/walker.cpp
+  src/walker_states.cpp
+)
+ament_target_dependencies(webot_walker
+  rclcpp
+  geometry_msgs
+  sensor_msgs
+)
+install(TARGETS
+  webot_walker
+  DESTINATION lib/${PROJECT_NAME}
+)
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
 
-# # MyRobotDriver library
-# add_library(
-#   ${PROJECT_NAME}
-#   SHARED
-#   src/MyRobotDriver.cpp
-# )
-# target_include_directories(
-#   ${PROJECT_NAME}
-#   PRIVATE
-#   include
-# )
-# ament_target_dependencies(
-#   ${PROJECT_NAME}
-#   pluginlib
-#   rclcpp
-#   webots_ros2_driver
-# )
-# install(TARGETS
-#   ${PROJECT_NAME}
-#   ARCHIVE DESTINATION lib
-#   LIBRARY DESTINATION lib
-#   RUNTIME DESTINATION bin
-# )
+# MyRobotDriver library
+add_library(
+  ${PROJECT_NAME}
+  SHARED
+  src/walker_robot_driver.cpp
+)
+target_include_directories(
+  ${PROJECT_NAME}
+  PRIVATE
+  include
+)
+ament_target_dependencies(
+  ${PROJECT_NAME}
+  pluginlib
+  rclcpp
+  webots_ros2_driver
+)
+install(TARGETS
+  ${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
 
 # Install additional directories.
 install(DIRECTORY
