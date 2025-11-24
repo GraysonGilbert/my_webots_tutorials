@@ -10,12 +10,27 @@
  */
 
 
- #include "my_webots_tutorials/walker_states.hpp"
+#include "my_webots_tutorials/walker_states.hpp"
 
- #include <memory>
+#include <memory>
 
-#include "my_webots_tutorials/walker_state_interface.hpp"
+//#include "my_webots_tutorials/walker_state_interface.hpp"
 #include "rclcpp/rclcpp.hpp"
+
+std::unique_ptr<geometry_msgs::msg::Twist> WalkerStateMachine::movement_state(double left_sensor, double right_sensor)
+{
+   return current_state_->movement_state(left_sensor, right_sensor);
+}
+
+std::unique_ptr<WalkerStateInterface> WalkerStateMachine::transition_state(double left_sensor, double right_sensor)
+{
+    auto next = current_state_->transition_state(left_sensor, right_sensor);
+
+    if (next) {
+        current_state_ = std::move(next);
+    }
+    return nullptr;
+}
 
 
 // Move Forward State:

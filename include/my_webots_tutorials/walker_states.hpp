@@ -31,7 +31,7 @@
 #include <algorithm>
 #include <memory>
 
-#include "walker_state_interface.hpp"
+#include "my_webots_tutorials/walker_state_interface.hpp"
 
 
 class WalkerStateMachine {
@@ -39,10 +39,13 @@ class WalkerStateMachine {
 
     // Base state should be move forward
         WalkerStateMachine(){
+
             current_state_ = std::make_unique<state_MoveForward>();
         }
 
         std::unique_ptr<geometry_msgs::msg::Twist> movement_state(double left_sensor, double right_sensor);
+
+        std::unique_ptr<WalkerStateInterface> transition_state(double left_sensor, double right_sensor);
         
         const char* state_name() const { return current_state_ ? current_state_->state_name() : "(no state)"; }
 

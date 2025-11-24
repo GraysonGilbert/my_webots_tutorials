@@ -34,6 +34,8 @@
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/range.hpp"
 #include "my_webots_tutorials/walker_states.hpp"
+#include "my_webots_tutorials/walker_state_interface.hpp"
+//#include "walker_states.hpp"
 
 class Walker: public rclcpp::Node {
     public:
@@ -51,7 +53,7 @@ class Walker: public rclcpp::Node {
         double left_sensor_value{0.0};
         double right_sensor_value{0.0};
 
-        std::unique_ptr<WalkerStateMachine> current_state_;
+        std::unique_ptr<WalkerStateMachine> state_machine_;
     
 };
 
