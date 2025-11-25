@@ -35,24 +35,36 @@
 #include "sensor_msgs/msg/range.hpp"
 #include "my_webots_tutorials/walker_states.hpp"
 #include "my_webots_tutorials/walker_state_interface.hpp"
-//#include "walker_states.hpp"
 
 class Walker: public rclcpp::Node {
     public:
+        /**
+         * @brief Construct a new Walker object
+         * 
+         */
         explicit Walker();
 
     private:
+        // Callback for the left distance sensor messages
         void left_sensor_callback(const sensor_msgs::msg::Range::SharedPtr msg);
 
+        // Callback for the right distance sensor messages
         void right_sensor_callback(const sensor_msgs::msg::Range::SharedPtr msg);
     
+        // Publisher for velocity command messages
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;
+        
+        // Subscriber to the left distance sensor messages
         rclcpp::Subscription<sensor_msgs::msg::Range>::SharedPtr left_sensor_sub_;
+
+        // Subscriber to the right distance sensor messages
         rclcpp::Subscription<sensor_msgs::msg::Range>::SharedPtr right_sensor_sub_;
 
+        // Distance sensor readings
         double left_sensor_value{0.0};
         double right_sensor_value{0.0};
 
+        // Unique pointer to the current state machine instance
         std::unique_ptr<WalkerStateMachine> state_machine_;
     
 };
