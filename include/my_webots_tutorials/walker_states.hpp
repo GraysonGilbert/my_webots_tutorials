@@ -100,6 +100,7 @@ class WalkerStateMachine {
 
     private:
         std::unique_ptr<WalkerStateInterface> current_state_; // Pointer to the current robot state
+        static bool turned_clockwise_; // Tracks most recent turn direction
 };
 
 #endif // MY_WEBOTS_TUTORIALS_WALKER_HPP_

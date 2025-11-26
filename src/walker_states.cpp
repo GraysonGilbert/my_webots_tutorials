@@ -44,7 +44,8 @@ std::unique_ptr<WalkerStateInterface> WalkerStateMachine::transition_state(doubl
 
     // If a new state was returned, switch to it
     if (next) {
-        current_state_ = std::move(next);
+        current_state_.swap(next);
+        return next;
     }
     return nullptr; // State machine itself never returns a new state
 }
@@ -76,7 +77,7 @@ std::unique_ptr<WalkerStateInterface> WalkerStateMachine::transition_state(doubl
 std::unique_ptr<geometry_msgs::msg::Twist> WalkerStateMachine::state_Turn::movement_state(double left_sensor, double right_sensor){
       auto command_message = std::make_unique<geometry_msgs::msg::Twist>();
       command_message->linear.x = 0.0; // No forward motion while turning
-      command_message->angular.z = -2.0; // Rotate
+      command_message->angular.z = WalkerStateMachine::turned_clockwise_ ? -2.0 : 2.0; // Rotate
 
       return command_message;
    
@@ -86,6 +87,8 @@ std::unique_ptr<geometry_msgs::msg::Twist> WalkerStateMachine::state_Turn::movem
  std::unique_ptr<WalkerStateInterface> WalkerStateMachine::state_Turn::transition_state(double left_sensor, double right_sensor){
 
    if (left_sensor > WalkerStateInterface::MIN_TURN_THRESHOLD && right_sensor > WalkerStateInterface::MIN_TURN_THRESHOLD){
+
+      WalkerStateMachine::turned_clockwise_ = !WalkerStateMachine::turned_clockwise_;
       return std::make_unique<WalkerStateMachine::state_MoveForward>(); // Move to forward state
     }
    return nullptr; // Stay in Turn state

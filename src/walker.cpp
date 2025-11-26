@@ -25,10 +25,13 @@
 
 
 #include "my_webots_tutorials/walker.hpp"
+#include "my_webots_tutorials/walker_states.hpp"
 #include <memory>
 #include <rclcpp/logging.hpp>
 
 #define MAX_RANGE 0.15
+
+bool WalkerStateMachine::turned_clockwise_ = true;
 
 Walker::Walker() : Node("obstacle_avoider") {
   // Publisher used to send velocity commands to the robot
@@ -67,13 +70,9 @@ void Walker::right_sensor_callback(const sensor_msgs::msg::Range::SharedPtr msg)
   auto new_state = state_machine_->transition_state(left_sensor_value, right_sensor_value);
 
   // Log the current state
-  RCLCPP_INFO_STREAM(get_logger(), "Current Walker State: " << state_machine_->state_name());
-
- 
-  // if (new_state) {
-  //   RCLCPP_INFO_STREAM(get_logger(), "Current Walker State: " << state_machine_->state_name());
-  // }
-
+  if (new_state) {
+    RCLCPP_INFO_STREAM(get_logger(), "Current Walker State: " << state_machine_->state_name());
+  }
 }
   
 
