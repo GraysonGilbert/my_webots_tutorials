@@ -23,7 +23,7 @@ CircleArena {
   }
 }
 Solid {
-  translation 1 0 .25
+  translation .5 0 .25
   name "box1"
   children [
     Shape {
@@ -39,23 +39,7 @@ Solid {
   }
 }
 Solid {
-  translation .75 -1 .25
-  name "box2"
-  children [
-    Shape {
-      geometry Box { size 0.25 0.25 0.25 }
-      appearance Appearance {
-        material Material { diffuseColor 0.8 0.2 0.2 }
-      }
-    }
-  ]
-  boundingObject Box { size 0.25 0.25 0.25 }
-  physics Physics {
-    mass 1.0
-  }
-}
-Solid {
-  translation .75 1 .25
+  translation 1.25 -.75 .25
   name "box3"
   children [
     Shape {
@@ -71,24 +55,8 @@ Solid {
   }
 }
 Solid {
-  translation 0 -.75 .25
+  translation .25 -.75 .25
   name "box4"
-  children [
-    Shape {
-      geometry Box { size 0.25 0.25 0.25 }
-      appearance Appearance {
-        material Material { diffuseColor 0.8 0.2 0.2 }
-      }
-    }
-  ]
-  boundingObject Box { size 0.25 0.25 0.25 }
-  physics Physics {
-    mass 1.0
-  }
-}
-Solid {
-  translation 0 .75 .25
-  name "box5"
   children [
     Shape {
       geometry Box { size 0.25 0.25 0.25 }
